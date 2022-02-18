@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta language="en-US" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <title>Places</title>
+    </head>
+    <body>
+        <h3>new place</h3>
+        <form action="/places" method="POST">
+            <input type="text" name="place[title]" placeholder="Place title" />
+            <input type="number" name="place[price]" placeholder="Price" />
+            <input type="text" name ="place[description]" placeholder="description" />
+            <input type="text" name="place[location]" placeholder = "location" />
+            <button type="submit">Submit</button>
+
+        </form>
+        <a href="/">Cancel</a>
+    </body>
+</html>

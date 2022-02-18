@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta language="en-US" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <title>Places</title>
+    </head>
+    <body>
+        <h3>Edit <%= place.title %></h3>
+        <form action="/places/<%=place.id%>?_method=PATCH" method="POST">
+            <input type="text" name="place[title]" placeholder="Place title" value="<%=place.title%>" />
+            <input type="number" name="place[price]" placeholder="Price" value="<%=place.price%>"/>
+            <input type="text" name ="place[description]" placeholder="description" value="<%=place.description%>" />
+            <input type="text" name="place[location]" placeholder = "location" value="<%=place.location%>" />
+            <button type="submit">Submit</button>
+        </form>
+        <a href="/places/<%=place.id%>">Cancel</a>
+    </body>
+</html>

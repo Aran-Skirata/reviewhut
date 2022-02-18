@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta language="en-US" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <title><%=place.title%></title>
+    </head>
+    <body>
+        <h3><%=place.title%></h3>
+        <ul>
+            <li>Price: <%=place.price%></li>
+            <li>Location: <%=place.location%></li>
+            <li>Description: <%=place.description%></li>
+        </ul>
+        <a href="/places">Go back</a>
+        <a href="<%=place.id%>/edit">Edit</a>
+        <form action="<%=place.id%>?_method=DELETE" method="POST">
+            <button type="submit">Delete</button>
+        </form>
+    </body>
+</html>
