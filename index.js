@@ -6,7 +6,7 @@ const methodOverride = require("method-override");
 const morgan = require("morgan");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError");
-const AsyncErrorHandler = require("./utils/AsyncErrorHandler");
+const asyncErrorHandler = require("./utils/AsyncErrorHandler");
 const placeValidateSchema = require("./validations/placeValidations");
 
 const uri =
@@ -45,7 +45,7 @@ app.get("/", (req, res) => {
 
 app.get(
   "/places",
-  AsyncErrorHandler(async (req, res) => {
+  asyncErrorHandler(async (req, res) => {
     const places = await Place.find({});
     res.render("places/index", { places });
   })
@@ -54,7 +54,7 @@ app.get(
 app.post(
   "/places",
   validatePlace,
-  AsyncErrorHandler(async (req, res, next) => {
+  asyncErrorHandler(async (req, res, next) => {
     const place = new Place(req.body.place);
     await place.save();
     res.redirect(`places/${place._id}`);
@@ -67,7 +67,7 @@ app.get("/places/new", (req, res) => {
 
 app.get(
   "/places/:id",
-  AsyncErrorHandler(async (req, res) => {
+  asyncErrorHandler(async (req, res) => {
     const { id } = req.params;
     const place = await Place.findById(id);
     res.render("places/details", { place });
@@ -77,7 +77,7 @@ app.get(
 app.patch(
   "/places/:id",
   validatePlace,
-  AsyncErrorHandler(async (req, res) => {
+  asyncErrorHandler(async (req, res) => {
     const { id } = req.params;
 
     const place = await Place.findByIdAndUpdate(id, req.body.place);
@@ -87,7 +87,7 @@ app.patch(
 
 app.delete(
   "/places/:id",
-  AsyncErrorHandler(async (req, res) => {
+  asyncErrorHandler(async (req, res) => {
     const { id } = req.params;
     const place = await Place.findByIdAndDelete(id);
 
@@ -97,7 +97,7 @@ app.delete(
 
 app.get(
   "/places/:id/edit",
-  AsyncErrorHandler(async (req, res) => {
+  asyncErrorHandler(async (req, res) => {
     const { id } = req.params;
     const place = await Place.findById(id);
     res.render(`places/edit`, { place });
