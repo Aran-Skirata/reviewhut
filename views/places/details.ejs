@@ -1,12 +1,24 @@
 <% layout('./layout/boilerplate') %>
-<h3><%=place.title%></h3>
-<ul>
-  <li>Price: <%=place.price%></li>
-  <li>Location: <%=place.location%></li>
-  <li>Description: <%=place.description%></li>
-</ul>
-<a href="/places">Go back</a>
-<a href="<%=place.id%>/edit">Edit</a>
-<form action="<%=place.id%>?_method=DELETE" method="POST">
-  <button type="submit">Delete</button>
-</form>
+
+  <div class="d-flex justify-content-center">
+    <h3>
+      <%=place.title%>
+    </h3>
+  </div>
+  <div class="d-flex justify-content-center">
+    <ul>
+      <li>Price: <%=place.price%>
+      </li>
+      <li>Location: <%=place.location%>
+      </li>
+      <li>Description: <%=place.description%>
+      </li>
+    </ul>
+  </div>
+  <div class="d-flex justify-content-center">
+    <a href="/places">Go back</a>
+    <a href="<%=place.id%>/edit">Edit</a>
+    <form action="<%=place.id%>?_method=DELETE" method="POST">
+      <button type="submit">Delete</button>
+    </form>
+  </div>

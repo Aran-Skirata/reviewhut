@@ -1,30 +1,55 @@
 <% layout('./layout/boilerplate') %>
+<div>
 <h3>Edit <%= place.title %></h3>
-<form action="/places/<%=place.id%>?_method=PATCH" method="POST">
+</div>
+<form action="/places/<%=place.id%>?_method=PATCH" method="POST" class="d-flex flex-column align-items-center">
+  <div class="mb-3">
+  <label for="title" class="form-label">Place name</label>
   <input
+    id="title"
     type="text"
+    class="form-control"
     name="place[title]"
-    placeholder="Place title"
+    placeholder="River Camp"
     value="<%=place.title%>"
   />
+</div>
+  <div class="mb-3">
+  <label for="price" class="form-label">Price</label>
   <input
+    id="price"
     type="number"
+    class="form-control"
     name="place[price]"
-    placeholder="Price"
+    placeholder="199,99"
     value="<%=place.price%>"
   />
+</div>
+  <div class="mb-3">
+  <label for="dsc" class="form-label">Description</label>
   <input
+    id="dsc"
     type="text"
+    class="form-control"
     name="place[description]"
-    placeholder="description"
+    placeholder="Comfy!"
     value="<%=place.description%>"
   />
+</div>
+  <div class="mb-3">
+  <label for="location" class="form-label">Location</label>
   <input
+    id="location"
     type="text"
+    class="form-control"
     name="place[location]"
-    placeholder="location"
+    placeholder="Warsaw, Poland"
     value="<%=place.location%>"
   />
-  <button type="submit">Submit</button>
+  <div class="d-flex justify-content-center">
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <a href="/places/<%=place.id%>" class="btn btn-danger">Cancel</a>
+  </div>
+</div>
 </form>
-<a href="/places/<%=place.id%>">Cancel</a>
+

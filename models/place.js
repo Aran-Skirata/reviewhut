@@ -18,6 +18,9 @@ const PlaceSchema = new Schema({
     location: {
         type: "String",
         required: [true, "Location is required"]
+    },
+    img: {
+        type: "String",
     }
 })
 
