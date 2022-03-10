@@ -39,9 +39,10 @@ const validatePlace = (req, res, next) => {
   }
 };
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
+app.get("/", asyncErrorHandler(async(req, res) => {
+  const places = (await Place.find({}).limit(3));
+  res.render("home",{ places });
+}));
 
 app.get(
   "/places",

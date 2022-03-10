@@ -1,24 +1,21 @@
 <% layout('./layout/boilerplate') %>
+  <div class="d-flex justify-content-center">
+    <div class="card" style="width: 40rem;">
+      <img src="<%=place.img%>" class="card-img-top" alt="Could not preview image">
+      <div class="card-body">
+        <h5 class="card-title"><%= place.title %></h5>
+        <h class="card-text">$<%=place.price%>/night </h3>
+        <p class="card-text"><%= place.description%></p>
 
-  <div class="d-flex justify-content-center">
-    <h3>
-      <%=place.title%>
-    </h3>
-  </div>
-  <div class="d-flex justify-content-center">
-    <ul>
-      <li>Price: <%=place.price%>
-      </li>
-      <li>Location: <%=place.location%>
-      </li>
-      <li>Description: <%=place.description%>
-      </li>
-    </ul>
-  </div>
-  <div class="d-flex justify-content-center">
-    <a href="/places">Go back</a>
-    <a href="<%=place.id%>/edit">Edit</a>
-    <form action="<%=place.id%>?_method=DELETE" method="POST">
-      <button type="submit">Delete</button>
-    </form>
+
+        <div class="d-flex justify-content-between">
+          <a href="/places" class="btn btn-primary">Go back</a>
+          <a href="<%=place.id%>/edit" class="btn btn-warning">Edit</a>
+        <form action="<%=place.id%>?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+
+      </div>
+    </div>
   </div>

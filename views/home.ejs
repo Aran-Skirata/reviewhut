@@ -1,2 +1,35 @@
 <% layout('./layout/boilerplate') %>
-<h3>Home page</h3>
+    <main>
+        <div class="px-4 pt-5 my-5 text-center border-bottom">
+            <h1 class="display-4 fw-bold">Review Hut</h1>
+            <div class="col-lg-6 mx-auto">
+              <p class="lead mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatem ea esse velit, fugit ab, quae doloribus unde similique itaque reprehenderit molestias voluptates officia porro in neque eos odit mollitia. Dicta?</p>
+              <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+                <a href="/places" class="btn btn-primary btn-lg px-4 me-sm-3">Show Places</a>
+                <a type="#" class="btn btn-outline-secondary btn-lg px-4">Create account</a>
+              </div>
+            </div>
+            <div class="overflow-hidden" style="max-height: 30vh;">
+              <div class="container px-5">
+                <img src="https://picsum.photos/400/300" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy">
+              </div>
+            </div>
+          </div>
+        <div class="container marketing">
+            <div class="row">
+                <% for (let place of places) { %>
+                    <div class="col-lg-4">
+                        <img class="bd-placeholder-img rounded-circle" width="140" height="140"
+                            src="<%=place.img%>"></img>
+                        <h2>
+                            <%=place.title%>
+                        </h2>
+                        <p>
+                            <%=place.description%>
+                        </p>
+                        <p><a class="btn btn-secondary" href="/places/<%=place._id%>">View details »</a></p>
+                    </div>
+                    <% } %>
+            </div>
+         </div>
+    </main>
