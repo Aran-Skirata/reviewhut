@@ -2,12 +2,14 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const Place = require("./models/place");
+const Review = require("./models/review");
 const methodOverride = require("method-override");
 const morgan = require("morgan");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError");
 const asyncErrorHandler = require("./utils/AsyncErrorHandler");
 const placeValidateSchema = require("./validations/placeValidations");
+const reviewValidateSchema = require("./validations/reviewValidations");
 
 const uri =
   "mongodb+srv://SYSDBA:masterkey@cluster0.u96j0.mongodb.net/reviewhut?retryWrites=true&w=majority";
@@ -38,6 +40,16 @@ const validatePlace = (req, res, next) => {
     next();
   }
 };
+
+const validateReview = (req,res,next) => {
+  const {error} = reviewValidateSchema.validate(req.body);
+  if(error) {
+    const msg = error.details.map((err) => err.message).join(",");
+    throw new ExpressError(msg,400);
+  } else {
+    next();
+  }
+}
 
 app.get("/", asyncErrorHandler(async(req, res) => {
   const places = (await Place.find({}).limit(3));
@@ -70,7 +82,7 @@ app.get(
   "/places/:id",
   asyncErrorHandler(async (req, res) => {
     const { id } = req.params;
-    const place = await Place.findById(id);
+    const place = await Place.findById(id).populate('reviews');
     res.render("places/details", { place });
   })
 );
@@ -90,7 +102,7 @@ app.delete(
   "/places/:id",
   asyncErrorHandler(async (req, res) => {
     const { id } = req.params;
-    const place = await Place.findByIdAndDelete(id);
+    await Place.findByIdAndDelete(id);
 
     res.redirect("/places");
   })
@@ -103,6 +115,27 @@ app.get(
     const place = await Place.findById(id);
     res.render(`places/edit`, { place });
   })
+);
+
+app.post("/places/:id/review", validateReview ,asyncErrorHandler(async (req, res) => {  
+  const {id} = req.params;
+  const review = new Review(req.body.review);
+  const place = await Place.findById(id);
+  place.reviews.push(review);
+  await review.save();
+  await place.save();
+  res.redirect(`/places/${id}`);
+  })
+);
+
+//i need to delete reference and review itself
+app.delete("/places/:id/review/:reviewId", asyncErrorHandler(async (req,res) => {
+  const {id, reviewId} = req.params;
+
+  await Place.findByIdAndUpdate(id,{$pull: {reviews: reviewId}});
+  await Review.findByIdAndDelete(reviewId);
+  res.redirect(`/places/${id}`);
+})
 );
 
 app.all("*", (req, res, next) => {

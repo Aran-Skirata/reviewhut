@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const Review = require('./review');
 
 const Schema = mongoose.Schema;
 
-const PlaceSchema = new Schema({
+const placeSchema = new Schema({
     title: {
         type: 'String',
         required: [true, "Title required"]
@@ -21,8 +22,22 @@ const PlaceSchema = new Schema({
     },
     img: {
         type: "String",
+    },
+    reviews: [{
+        type: Schema.Types.ObjectId,
+        ref: "Review",
+    }]
+})
+
+placeSchema.post('findOneAndDelete', async function(doc) {
+    if(doc){
+       await Review.remove({
+            _id: {
+                $in: doc.reviews,
+            }
+        });
     }
 })
 
-module.exports = mongoose.model('Place', PlaceSchema);
+module.exports = mongoose.model('Place', placeSchema);
 

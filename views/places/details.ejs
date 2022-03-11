@@ -3,19 +3,50 @@
     <div class="card" style="width: 40rem;">
       <img src="<%=place.img%>" class="card-img-top" alt="Could not preview image">
       <div class="card-body">
-        <h5 class="card-title"><%= place.title %></h5>
+        <h5 class="card-title">
+          <%= place.title %>
+        </h5>
         <h class="card-text">$<%=place.price%>/night </h3>
-        <p class="card-text"><%= place.description%></p>
-
-
-        <div class="d-flex justify-content-between">
-          <a href="/places" class="btn btn-primary">Go back</a>
-          <a href="<%=place.id%>/edit" class="btn btn-warning">Edit</a>
-        <form action="<%=place.id%>?_method=DELETE" method="POST">
-          <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
-      </div>
+            <p class="card-text">
+              <%= place.description%>
+            </p>
+            <div class="d-flex justify-content-between">
+              <a href="/places" class="btn btn-primary">Go back</a>
+              <a href="<%=place.id%>/edit" class="btn btn-warning">Edit</a>
+              <form action="<%=place._id%>?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            </div>
 
       </div>
     </div>
+    <div class="card" style="width: 20em; height: 20em;">
+      <form action="<%=place._id%>/review" method="POST">
+        <h4>Leave a review!</h4>
+      <div class="mb-3">
+          <label for="rating" class="form-label">Rating:</label>
+          <input type="range" name="review[rating]" class="form-range" min="0" max="5" id="rating">
+      </div>
+      <div class="mb-3">
+        <label for="review" class="form-label">Example textarea</label>
+        <textarea class="form-control" name="review[body]" id="review" rows="5"></textarea>
+        <button type="submit" class="btn btn-primary">Add review</button>
+      </div>
+      </form>
+      <h3 class="card-title">Reviews</h3>
+      <% for (review of place.reviews) { %>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Rating: <%=review.rating%></h5>
+          <p class="card-text"><%=review.body%></p>
+        </div>
+        <form action="<%=place._id%>/review/<%=review._id%>?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+      <% } %>
+    </div>
   </div>
+
+
+
