@@ -29,9 +29,9 @@ const placeSchema = new Schema({
     }]
 })
 
-placeSchema.post('findOneAndDelete', async function(doc) {
-    if(doc){
-       await Review.remove({
+placeSchema.post('findOneAndDelete', async function (doc) {
+    if (doc) {
+        await Review.remove({
             _id: {
                 $in: doc.reviews,
             }

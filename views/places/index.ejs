@@ -1,17 +1,18 @@
 <% layout('./layout/boilerplate') %>
 <div class="d-flex justify-content-center">
-  <div class="list-group">
-    <% for (let place of places) { %>
-    <a href="places/<%=place.id%>" class="list-group-item list-group-item-action d-flex gap-3 py-3" style="width:45rem" aria-current="true">
-      <img src="<%=place.img%>" alt="twbs" width="256" height="256" class="rounded flex-shrink-0">
-      <div class="d-flex gap-2 w-100 justify-content-between">
-        <div>
-          <h6 class="mb-0"><%=place.title%></h6>
-          <p class="mb-0 opacity-75"><%=place.description%></p>
-        </div>
-        <small class="opacity-50 text-nowrap"><%=place.location%></small>
-      </div>
-    </a>
-    <% } %>
-  </div>
+    <div class="list-group">
+        <% for (let place of places) { %>
+        <a href="places/<%= place.id %>" class="list-group-item list-group-item-action d-flex gap-3 py-3"
+           style="width:45rem" aria-current="true">
+            <img src="<%= place.img %>" alt="twbs" width="256" height="256" class="rounded flex-shrink-0">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                    <h6 class="mb-0"><%= place.title %></h6>
+                    <p class="mb-0 opacity-75"><%= place.description %></p>
+                </div>
+                <small class="opacity-50 text-nowrap"><%= place.location %></small>
+            </div>
+        </a>
+        <% } %>
+    </div>
 </div>
