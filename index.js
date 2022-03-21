@@ -33,6 +33,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.use(morgan("tiny"));
+app.use(express.static(path.join(__dirname,'public')));
 
 app.use('/places/:id/review', reviewRoutes);
 app.use('/places',placeRoutes);

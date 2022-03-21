@@ -21,16 +21,19 @@
         </div>
     </div>
     <div class="card" style="width: 20em; height: 20em;">
-        <form action="<%= place._id %>/review" method="POST">
+        <form action="<%= place._id %>/review" method="POST" class="needs-validation" novalidate>
             <h4>Leave a review!</h4>
             <div class="mb-3">
                 <label for="rating" class="form-label">Rating:</label>
-                <input type="range" name="review[rating]" class="form-range" min="0" max="5" id="rating">
+                <input type="range" name="review[rating]" class="form-range" min="0" max="5" id="rating" required>
             </div>
             <div class="mb-3">
                 <label for="review" class="form-label">Example textarea</label>
-                <textarea class="form-control" name="review[body]" id="review" rows="5"></textarea>
+                <textarea class="form-control" name="review[body]" id="review" rows="5" required placeholder="Best weekend ever!!"></textarea>
                 <button type="submit" class="btn btn-primary">Add review</button>
+                <div class="invalid-feedback">
+                    Please enter review text.
+                  </div>
             </div>
         </form>
         <h3 class="card-title">Reviews</h3>

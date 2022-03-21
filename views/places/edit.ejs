@@ -1,5 +1,5 @@
 <% layout('./layout/boilerplate') %>
-<form action="/places/<%= place.id %>?_method=PATCH" method="POST" class="d-flex flex-column align-items-center">
+<form action="/places/<%= place.id %>?_method=PATCH" method="POST" class="d-flex flex-column align-items-center needs-validation" novalidate>
     <div class="mb-3">
         <label for="title" class="form-label">Place name</label>
         <input
@@ -9,7 +9,11 @@
                 name="place[title]"
                 placeholder="River Camp"
                 value="<%= place.title %>"
+                required
         />
+        <div class="invalid-feedback">
+            Please choose place name.
+        </div>
     </div>
     <div class="mb-3">
         <label for="price" class="form-label">Price</label>
@@ -20,7 +24,11 @@
                 name="place[price]"
                 placeholder="199,99"
                 value="<%= place.price %>"
+                required
         />
+        <div class="invalid-feedback">
+            Please enter price.
+        </div>
     </div>
     <div class="mb-3">
         <label for="dsc" class="form-label">Description</label>
@@ -29,9 +37,12 @@
                 class="form-control"
                 name="place[description]"
                 placeholder="Comfy!"
-                value="<%= place.description %>"
                 rows="4"
-        ></textarea>
+                required
+        ><%= place.description%></textarea>
+        <div class="invalid-feedback">
+            Please enter place description.
+        </div>
     </div>
     <div class="mb-3">
         <label for="location" class="form-label">Location</label>
@@ -42,12 +53,20 @@
                 name="place[location]"
                 placeholder="Warsaw, Poland"
                 value="<%= place.location %>"
+                required
         />
+        <div class="invalid-feedback">
+            Please enter place location.
+        </div>
     </div>
     <div class="mb-3">
         <label for="image" class="form-label">Image URL</label>
         <input id="image" type="text" class="form-control" name="place[img]"
-               placeholder="e.g. https://picsum.photos/400/300" value="<%= place.img %>"/>
+               placeholder="e.g. https://picsum.photos/400/300" value="<%= place.img %>" required/>
+
+        <div class="invalid-feedback">
+                Please enter valid image URL.
+        </div>
     </div>
     <div class="d-flex justify-content-center">
         <button type="submit" class="btn btn-primary">Submit</button>
