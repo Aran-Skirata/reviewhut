@@ -4,6 +4,7 @@ const placeValidateSchema = require("../validations/placeValidations");
 const ExpressError = require("../utils/ExpressError");
 const express = require('express');
 const router = express.Router();
+const flash = require('connect-flash');
 
 const validatePlace = (req, res, next) => {
 
@@ -31,6 +32,7 @@ router.post(
     asyncErrorHandler(async (req, res, next) => {
         const place = new Place(req.body.place);
         await place.save();
+        req.flash('success', "Succesfully created new place");
         res.redirect(`places/${place._id}`);
     })
 );
@@ -55,6 +57,7 @@ router.patch(
         const {id} = req.params;
 
         const place = await Place.findByIdAndUpdate(id, req.body.place);
+        req.flash('success', "Succesfully updated existing place");
         res.redirect(`/places/${place._id}`);
     })
 );
@@ -64,7 +67,7 @@ router.delete(
     asyncErrorHandler(async (req, res) => {
         const {id} = req.params;
         await Place.findByIdAndDelete(id);
-
+        req.flash('success', "Succesfully deleted place");
         res.redirect("/places");
     })
 );

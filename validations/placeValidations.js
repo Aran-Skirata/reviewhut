@@ -5,7 +5,8 @@ const placeValidationSchema = Joi.object({
         title: Joi.string().min(5).max(30).required(),
         price: Joi.number().precision(2).sign("positive").required(),
         description: Joi.string().max(500),
-        location: Joi.string().alphanum(),
+        location: Joi.string().required(),
+        img: Joi.string().required(),
     }).required(),
 });
 

@@ -10,9 +10,12 @@ const ExpressError = require("./utils/ExpressError");
 const asyncErrorHandler = require("./utils/AsyncErrorHandler");
 const placeValidateSchema = require("./validations/placeValidations");
 const reviewValidateSchema = require("./validations/reviewValidations");
+const session = require("express-session");
+const flash = require("connect-flash");
 
 const reviewRoutes = require('./routes/review');
 const placeRoutes = require('./routes/place');
+const { Session } = require("inspector");
 
 
 const uri =
@@ -34,6 +37,22 @@ app.use(express.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.use(morgan("tiny"));
 app.use(express.static(path.join(__dirname,'public')));
+app.use(session({
+    secret: "thisisnotagoodsecret",
+    resave: false,
+    saveUninitialized: true,
+    cookie:{
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+    }
+}));
+app.use(flash());
+
+app.use((req,res,next) => {
+    res.locals.success = req.flash('success');
+    next();
+})
 
 app.use('/places/:id/review', reviewRoutes);
 app.use('/places',placeRoutes);
