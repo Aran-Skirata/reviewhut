@@ -4,7 +4,6 @@ const placeValidateSchema = require("../validations/placeValidations");
 const ExpressError = require("../utils/ExpressError");
 const express = require('express');
 const router = express.Router();
-const flash = require('connect-flash');
 
 const validatePlace = (req, res, next) => {
 
@@ -46,7 +45,12 @@ router.get(
     asyncErrorHandler(async (req, res) => {
         const {id} = req.params;
         const place = await Place.findById(id).populate('reviews');
-        res.render("places/details", {place});
+        if(!place){
+            req.flash('error', "Place not found");
+            res.redirect('/places');
+        } else {
+            res.render("places/details", {place});
+        }
     })
 );
 
@@ -57,8 +61,14 @@ router.patch(
         const {id} = req.params;
 
         const place = await Place.findByIdAndUpdate(id, req.body.place);
-        req.flash('success', "Succesfully updated existing place");
-        res.redirect(`/places/${place._id}`);
+        if(!place)
+        {
+            req.flash('error', "Place not found");
+            res.redirect(`/places`);
+        } else {
+            req.flash('success', "Succesfully updated existing place");
+            res.redirect(`/places/${place._id}`);
+        }
     })
 );
 
@@ -66,7 +76,7 @@ router.delete(
     "/:id",
     asyncErrorHandler(async (req, res) => {
         const {id} = req.params;
-        await Place.findByIdAndDelete(id);
+        const place = await Place.findByIdAndDelete(id);
         req.flash('success', "Succesfully deleted place");
         res.redirect("/places");
     })
@@ -77,7 +87,13 @@ router.get(
     asyncErrorHandler(async (req, res) => {
         const {id} = req.params;
         const place = await Place.findById(id);
-        res.render(`places/edit`, {place});
+        if(!place)
+        {
+            req.flash('error', "Place not found");
+            res.redirect('/places');
+        } else {
+            res.render(`places/edit`, {place});
+        }
     })
 );
 
