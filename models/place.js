@@ -26,7 +26,7 @@ const placeSchema = new Schema({
     reviews: [{
         type: Schema.Types.ObjectId,
         ref: "Review",
-    }]
+    }],
 })
 
 placeSchema.post('findOneAndDelete', async function (doc) {

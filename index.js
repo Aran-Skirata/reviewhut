@@ -15,6 +15,7 @@ const flash = require("connect-flash");
 
 const reviewRoutes = require('./routes/review');
 const placeRoutes = require('./routes/place');
+const userRoutes = require('./routes/user');
 const { Session } = require("inspector");
 
 
@@ -57,6 +58,7 @@ app.use((req,res,next) => {
 
 app.use('/places/:id/review', reviewRoutes);
 app.use('/places',placeRoutes);
+app.use('/user',userRoutes);
 
 
 app.get("/", asyncErrorHandler(async (req, res) => {

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 reviewSchema = Schema({
     body: {
@@ -9,6 +9,10 @@ reviewSchema = Schema({
     rating: {
         type: Number,
         required: true,
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
     }
 });
 
