@@ -4,6 +4,8 @@ const placeValidateSchema = require("../validations/placeValidations");
 const ExpressError = require("../utils/ExpressError");
 const express = require('express');
 const router = express.Router();
+const {isLoggedIn} = require('../middleware');
+
 
 const validatePlace = (req, res, next) => {
 
@@ -27,6 +29,7 @@ router.get(
 
 router.post(
     "/",
+    isLoggedIn,
     validatePlace,
     asyncErrorHandler(async (req, res, next) => {
         const place = new Place(req.body.place);
@@ -36,8 +39,8 @@ router.post(
     })
 );
 
-router.get("/new", (req, res) => {
-    res.render("places/new");
+router.get("/new", isLoggedIn, (req, res) => {
+    res.render("places/new")
 });
 
 router.get(
@@ -57,6 +60,7 @@ router.get(
 router.patch(
     "/:id",
     validatePlace,
+    isLoggedIn,
     asyncErrorHandler(async (req, res) => {
         const {id} = req.params;
 
@@ -74,6 +78,7 @@ router.patch(
 
 router.delete(
     "/:id",
+    isLoggedIn,
     asyncErrorHandler(async (req, res) => {
         const {id} = req.params;
         const place = await Place.findByIdAndDelete(id);
@@ -84,6 +89,7 @@ router.delete(
 
 router.get(
     "/:id/edit",
+    isLoggedIn,
     asyncErrorHandler(async (req, res) => {
         const {id} = req.params;
         const place = await Place.findById(id);

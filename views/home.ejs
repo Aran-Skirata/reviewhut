@@ -8,7 +8,11 @@
                 eos odit mollitia. Dicta?</p>
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
                 <a href="/places" class="btn btn-primary btn-lg px-4 me-sm-3">Show Places</a>
-                <a href="/user/register" class="btn btn-outline-secondary btn-lg px-4">Create account</a>
+                <% if(!user) { %> 
+                    <a href="/reqister" class="btn btn-outline-secondary btn-lg px-4">Create account</a>
+                <% } else { %> 
+                    <a href="/panel" class="btn btn-outline-secondary btn-lg px-4">User panel</a>
+                <% } %> 
             </div>
         </div>
         <div class="overflow-hidden" style="max-height: 30vh;">

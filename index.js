@@ -12,11 +12,12 @@ const placeValidateSchema = require("./validations/placeValidations");
 const reviewValidateSchema = require("./validations/reviewValidations");
 const session = require("express-session");
 const flash = require("connect-flash");
-
 const reviewRoutes = require('./routes/review');
 const placeRoutes = require('./routes/place');
 const userRoutes = require('./routes/user');
-const { Session } = require("inspector");
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
 
 
 const uri =
@@ -49,16 +50,23 @@ app.use(session({
     }
 }));
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 app.use((req,res,next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
+    res.locals.user = req.user;
     next();
 })
 
 app.use('/places/:id/review', reviewRoutes);
 app.use('/places',placeRoutes);
-app.use('/user',userRoutes);
+app.use('/',userRoutes);
 
 
 app.get("/", asyncErrorHandler(async (req, res) => {

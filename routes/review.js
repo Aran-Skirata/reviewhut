@@ -5,6 +5,7 @@ const Place = require("../models/place");
 const reviewValidateSchema = require("../validations/reviewValidations");
 const ExpressError = require("../utils/ExpressError");
 const router = express.Router({mergeParams: true});
+const {isLoggedIn} = require("../middleware");
 
 const validateReview = (req, res, next) => {
         const {error} = reviewValidateSchema.validate(req.body);
@@ -16,7 +17,7 @@ const validateReview = (req, res, next) => {
         }
 }
 
-router.post("/", validateReview, asyncErrorHandler(async (req, res) => {
+router.post("/", isLoggedIn, validateReview, asyncErrorHandler(async (req, res) => {
         const {id} = req.params;
         const review = new Review(req.body.review);
         const place = await Place.findById(id);
@@ -29,7 +30,7 @@ router.post("/", validateReview, asyncErrorHandler(async (req, res) => {
 );
 
 //i need to delete reference and review itself
-router.delete("/:reviewId", asyncErrorHandler(async (req, res) => {
+router.delete("/:reviewId", isLoggedIn, asyncErrorHandler(async (req, res) => {
         const {id, reviewId} = req.params;
 
         await Place.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
