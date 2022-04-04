@@ -3,16 +3,17 @@
     <div class="card" style="width: 40rem;">
         <img src="<%= place.img %>" class="card-img-top" alt="Could not preview image">
         <div class="card-body">
-            <h5 class="card-title">
+            <h4 class="card-title">
                 <%= place.title %>
-            </h5>
+            </h4>
+            <h6 class="card-text"><i>Created by <%=place.owner.username %></i></h6>
             <h3 class="card-text">$<%= place.price %>/night </h3>
                 <p class="card-text">
                     <%= place.description %>
                 </p>
                 <div class="d-flex justify-content-between">
                     <a href="/places" class="btn btn-primary">Go back</a>
-                    <% if(user) { %> 
+                    <% if(user && place.owner.equals(user._id))  { %> 
                     <a href="<%= place.id %>/edit" class="btn btn-warning">Edit</a>
                     <form action="<%= place._id %>?_method=DELETE" method="POST">
                         <button type="submit" class="btn btn-danger">Delete</button>
@@ -43,9 +44,10 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Rating: <%= review.rating %></h5>
+                <h6 class="card-subtitle mb-2 text-muted">Created by <%= review.user.username %></h6>
                 <p class="card-text"><%= review.body %></p>
             </div>
-            <% if (user) {  %> 
+            <% if (user && review.user.equals(user._id)) {  %> 
             <form action="<%= place._id %>/review/<%= review._id %>?_method=DELETE" method="POST">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
