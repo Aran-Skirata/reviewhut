@@ -13,7 +13,7 @@ module.exports.isLoggedIn = (req,res,next) => {
         res.redirect('/login');
     }
     next();
-};
+}
 
 module.exports.validatePlace = (req, res, next) => {
 
@@ -24,7 +24,7 @@ module.exports.validatePlace = (req, res, next) => {
     } else {
         next();
     }
-};
+}
 
 module.exports.validateReview = (req, res, next) => {
     const {error} = reviewValidateSchema.validate(req.body);
@@ -51,8 +51,9 @@ module.exports.verifyOwner = async (req,res,next) => {
 }
 
 module.exports.verifyReviewOwner = async (req,res,next) => {
-    const {id} = req.params;
-    const review = await Review.findById(id);
+    const {reviewId} = req.params;
+    const review = await Review.findById(reviewId);
+    console.log(review);
     if(!review.user.equals(req.user._id))
     {
         req.flash('error', 'Permission denied');
