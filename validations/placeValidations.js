@@ -6,8 +6,8 @@ const placeValidationSchema = Joi.object({
         price: Joi.number().precision(2).sign("positive").required(),
         description: Joi.string().max(500),
         location: Joi.string().required(),
-        img: Joi.string().required(),
     }).required(),
+    deleteImages: Joi.array(),
 });
 
 module.exports = placeValidationSchema;

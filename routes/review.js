@@ -8,12 +8,14 @@ const {
 } = require("../middleware");
 const reviewControllers = require("../controllers/reviews");
 
-router.post(
-  "/",
-  isLoggedIn,
-  validateReview,
-  asyncErrorHandler(reviewControllers.createReview)
-);
+router
+  .route("/")
+  .get(reviewControllers.redirectDetails)
+  .post(
+    isLoggedIn,
+    validateReview,
+    asyncErrorHandler(reviewControllers.createReview)
+  );
 
 router.delete(
   "/:reviewId",

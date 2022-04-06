@@ -24,7 +24,7 @@ const SeedDB = async () => {
             price: (Math.random() * 500).toPrecision(2),
             location: `${cities[random1000].city} ${cities[random1000].state}`,
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium eu purus varius ultricies. Vivamus rhoncus, metus cursus pellentesque ultrices, eros mi posuere orci, nec aliquet enim metus vestibulum velit. Nunc semper sapien sit amet mattis tristique. Fusce augue nibh, posuere nec enim sit amet, congue condimentum nulla. Donec vitae urna tortor. Donec id nulla nibh. Aliquam ut quam at elit tristique suscipit.",
-            img: "https://picsum.photos/400/300",
+            images: [{url:"https://res.cloudinary.com/dr8m8qurw/image/upload/v1649240603/Reviewhut/istockphoto-104731717-612x612_yyoveg.jpg", filename: "istockphoto-104731717-612x612_yyoveg"} ],
             owner: "6242c27878442940116e77e9",
         });
         await place.save();

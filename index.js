@@ -1,3 +1,6 @@
+if(process.env.NODE_ENV !== "production"){
+    require('dotenv').config();
+}
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
@@ -19,11 +22,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 
-
-const uri =
-    "mongodb+srv://SYSDBA:masterkey@cluster0.u96j0.mongodb.net/reviewhut?retryWrites=true&w=majority";
 mongoose
-    .connect(uri)
+    .connect(process.env.MONGO_URI)
     .then(() => {
         console.log("Mongo connected succesfully");
     })

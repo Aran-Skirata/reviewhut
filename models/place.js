@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Review = require('./review');
-
+const {cloudinary} = require('../cloudinary')
 const Schema = mongoose.Schema;
 
 const placeSchema = new Schema({
@@ -20,9 +20,14 @@ const placeSchema = new Schema({
         type: "String",
         required: [true, "Location is required"]
     },
-    img: {
-        type: "String",
-    },
+    images: [{
+        url: {
+            type: String,
+        },
+        filename: {
+            type: String,
+        },
+    }],
     owner: {
         type: Schema.Types.ObjectId,
         ref: "User",
@@ -34,8 +39,12 @@ const placeSchema = new Schema({
 })
 
 placeSchema.post('findOneAndDelete', async function (doc) {
+    for(let image of doc.images)
+    {
+        cloudinary.uploader.destroy(image.filename);
+    }
     if (doc) {
-        await Review.remove({
+        await Review.deleteMany({
             _id: {
                 $in: doc.reviews,
             }

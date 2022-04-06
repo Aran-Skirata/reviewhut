@@ -21,3 +21,10 @@ module.exports.deleteReview = async (req, res) => {
   req.flash("success", "Review deleted succesfully");
   res.redirect(`/places/${id}`);
 };
+
+
+module.exports.redirectDetails = (req,res) => {
+  const {id} = req.params;
+
+  res.redirect(`/places/${id}`);
+}
