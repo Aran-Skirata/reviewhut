@@ -1,4 +1,6 @@
 <% layout('./layout/boilerplate') %>
 
 <h1>Error <%= err.status %></h1>
+<% if(process.env.NODE_ENV !== "production") { %> 
 <p><%= err.message %></p>
+<% } %> 
